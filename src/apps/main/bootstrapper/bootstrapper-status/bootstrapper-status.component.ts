@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BootstrappingStatusNotifierService } from '../bootstrapping-status-notifier.service';
 import { ServiceBootstrapStatus, BootstrapStatusType } from '../bootstrap.models';
+import * as moment from 'moment';
 
 @Component({
   selector: 'fit-bootstrapper-status',
@@ -37,6 +38,9 @@ export class BootstrapperStatusComponent implements OnInit {
   //#region Formatters
   getStatus(status: BootstrapStatusType) {
     return BootstrapStatusType[status]
+  }
+  getFormattedTime(dateTime: number) {
+    return dateTime ? moment(dateTime).format('HH:mm:ss.SSS') : null;
   }
   //#endregion
 }

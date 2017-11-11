@@ -11,9 +11,9 @@
   <tbody>
     <tr *ngFor="let serviceStatus of inQueueServices">
       <td>{{serviceStatus.service.displayName}}</td>
-      <td>{{serviceStatus.startTime | date}}</td>
+      <td>{{getFormattedTime(serviceStatus.startTime)}}</td>
       <td>{{getStatus(serviceStatus.status)}}</td>
-      <td>{{serviceStatus.endTime}}</td>
+      <td>{{getFormattedTime(serviceStatus.endTime)}}</td>
       <td>{{serviceStatus.error?.message}}</td>
     </tr>
   </tbody>
