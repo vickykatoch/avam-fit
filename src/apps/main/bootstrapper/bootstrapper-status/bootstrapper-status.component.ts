@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { BootstrappingStatusNotifierService } from '../bootstrapping-status-notifier.service';
 import { ServiceBootstrapStatus, BootstrapStatusType } from '../bootstrap.models';
 import * as moment from 'moment';
@@ -10,8 +10,10 @@ import * as moment from 'moment';
   encapsulation: ViewEncapsulation.Native
 })
 export class BootstrapperStatusComponent implements OnInit {
-
+  title : string = 'Bootstrapping Application...';
   inQueueServices: ServiceBootstrapStatus[] = [];
+  @Output() bootStrapped: EventEmitter<any> = new EventEmitter();
+  
 
   constructor(private bootstrapStatusService: BootstrappingStatusNotifierService) {
     bootstrapStatusService.inQueueServicesInitalStatusList$.subscribe(this.onInitialStatusReceived.bind(this));
@@ -32,7 +34,8 @@ export class BootstrapperStatusComponent implements OnInit {
     console.error(err);
   }
   onCompleted() {
-    console.info('completed');
+    this.title = 'Application bootstrapped successfully';
+    this.bootStrapped.next(true);
   }
 
   //#region Formatters

@@ -22,7 +22,9 @@ export class AppComponent implements OnInit {
     this.title = "Bootstraping Application...";
     this.bootStrapper.bootstrap();
   }
-
+  onBootstrapSucceeded(evt: any) : void {
+    console.log('App Bootstrapped');
+  }
 
 
 }
