@@ -5,7 +5,7 @@ import { BootstappingPipelineItem } from './bootstrap-pipeline-item';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BootstrapServiceInfo, BootstrapStatusType, ServiceBootstrapStatus } from '../bootstrap.models';
-import { ApplicationInfo } from 'fit-core-models/index';
+import { ApplicationInfo, AppContext } from 'fit-core-models/index';
 import { Store } from '@ngrx/store';
 
 
@@ -34,22 +34,12 @@ export class LocalDataService extends BootstappingPipelineItem {
       this._currentStatus.startTime = Date.now();
       this._currentStatus.status = BootstrapStatusType.Running;
       observer.next(this._currentStatus);
-      setTimeout(() => {
-        this._currentStatus.endTime = Date.now();
-        this._currentStatus.status = BootstrapStatusType.Succeeded;
-        const appInfo = {
-          name : 'MainApp',
-          user : 'KB',
-          type : '',
-          env : 'DEV',
-          region : 'XNA',
-          version : '1.0.0'
-        };
-        this.dispatchStoreAction(appInfo);
-        this.logger.timeEnd('UserInfoBootstrapService');
-        observer.next(this._currentStatus);
-        observer.complete();
-      }, 2000);
+      AppContext.instance.init('Main','DEV','XNA',window.location.origin, window.location.href)
+          .subscribe(appInfo=>{
+            Object.assign(this._currentStatus, {endTime : Date.now(),status : BootstrapStatusType.Succeeded });
+            observer.next(this._currentStatus);
+            observer.complete();
+          });
     });
   }
   private dispatchStoreAction(appInfo: ApplicationInfo) : void {

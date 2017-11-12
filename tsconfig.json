@@ -30,7 +30,7 @@
         "modules/infra/fin-app-host/*"
       ],
       "fit-core-data/*" : [
-        "modules/core/fit-core-data/*"
+        "modules/core/fit-core-data-services/*"
       ],
       "fit-core-models/*" : [
         "modules/core/fit-core-models/*"

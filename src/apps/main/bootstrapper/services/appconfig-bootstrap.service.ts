@@ -5,9 +5,10 @@ import { BootstrapServiceInfo, ServiceBootstrapStatus,  BootstrapStatusType } fr
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { Store } from '@ngrx/store';
-import { AppConfig } from 'fit-core-models/index';
+import { AppConfig, AppContext } from 'fit-core-models/index';
 import 'rxjs/add/operator/take';
-
+import { AppConfigService } from 'fit-core-data/index';
+import { ActionCreatorFactory } from './../../store/index';
 
 @Injectable()
 export class AppconfigBootstrapService extends BootstappingPipelineItem {
@@ -15,7 +16,10 @@ export class AppconfigBootstrapService extends BootstappingPipelineItem {
   private _currentStatus: ServiceBootstrapStatus;
 
 
-  constructor(loggingService: ApplicationLoggingService, private store: Store<AppConfig>) {
+  constructor(loggingService: ApplicationLoggingService,
+              private store: Store<AppConfig>,
+              private appConfigService : AppConfigService
+            ) {
     super('AppconfigBootstrapService', loggingService);
     this._serviceInfo = this._serviceInfo || { name: 'AppConfig', displayName: 'Application Configuration', priority: 1 } ;
     this._currentStatus = this._currentStatus || { startTime : null, endTime : null, status :  BootstrapStatusType.Initial, service : this.serviceInfo, error: null };
@@ -31,22 +35,17 @@ export class AppconfigBootstrapService extends BootstappingPipelineItem {
       this.logger.time('ApplicationConfigService');
       this._currentStatus.startTime = Date.now();
       this._currentStatus.status = BootstrapStatusType.Running;
-      this.store
-      this.store.select<AppConfig>(appState=> appState)
-        .take(1)
-        .subscribe(cfg=> {
-
-        console.log(cfg);
-      });
-
       observer.next(this._currentStatus);
-      setTimeout(() => {
+      const appInfo = AppContext.instance.appInfo;
+      const url = `${appInfo.baseUrl}/api/appConfigs/${appInfo.region}/${appInfo.env}`;
+      this.appConfigService.fetch(url).subscribe(appConfig=> {
+        this.store.dispatch(ActionCreatorFactory.create<AppConfig>('LOAD_APPCONFIG',appConfig));
         this._currentStatus.endTime = Date.now();
         this._currentStatus.status = BootstrapStatusType.Succeeded;
         this.logger.timeEnd('ApplicationConfigService');
         observer.next(this._currentStatus);
         observer.complete();
-      }, 1000);
+      });
     });
   }
 }

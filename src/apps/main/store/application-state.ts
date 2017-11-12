@@ -6,12 +6,10 @@ import {
       Workspace
 } from 'fit-core-models/index';
 
-import { AppInfoDefaultStateProvider } from './defaultStates/appInfo-defstate.provider';
 import { AppConfigDefaultStateProvider } from './defaultStates/appConfig-defstate.provider';
 import * as _ from "lodash";
 
 export interface ApplicationState {
-      appInfo : ApplicationInfo;
       appConfig : AppConfig;
       // userPrefs : UserPreference;
       // user: User;
@@ -20,6 +18,5 @@ export interface ApplicationState {
       // instruments : {[key: string]: Instrument};
 }
 export const INITIAL_APPLICATION_STATE = {
-      appInfo : AppInfoDefaultStateProvider.getDefault(),
       appConfig : AppConfigDefaultStateProvider.getDefault()
 };

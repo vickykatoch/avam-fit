@@ -1,8 +1,7 @@
 export * from './application-state';
 export * from './actions/store-action';
 import {
-      appConfigReducer,
-      appInfoReducer
+      appConfigReducer
       } from './reducers/index';
 
 import { ApplicationState, INITIAL_APPLICATION_STATE } from './application-state';
@@ -13,8 +12,7 @@ export class FitStoreHelper {
       }
       static reducers() : any {
             return {
-                  appInfo : appConfigReducer,
-                  appConfig : appInfoReducer
+                  appInfo : appConfigReducer
             };
       }
 }

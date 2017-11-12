@@ -1,6 +1,7 @@
 import { ApplicationLoggingService, ApplicationLogger } from 'fit-logger-core/index';
 import { Observable } from "rxjs/Observable";
 import { ServiceBootstrapStatus, BootstrapServiceInfo } from "../bootstrap.models";
+import { ApplicationInfo } from 'fit-core-models/index';
 
 export abstract class BootstappingPipelineItem {
   serviceInfo : BootstrapServiceInfo;
@@ -12,4 +13,5 @@ export abstract class BootstappingPipelineItem {
   }
 
   abstract start(options?: any) : Observable<ServiceBootstrapStatus>;
+
 }

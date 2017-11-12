@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start-all": "concurrently \"ng serve --app main\" \"ng serve --app dashboard --port 4300\"",
-    "start": "ng serve --app main",
+    "start-all": "concurrently \"ng serve --aot --app  --proxy-config proxy.config.json\" \"ng serve --app dashboard --port 4300 --aot --proxy-config proxy.config.json\"",
+    "start": "ng serve --app main --proxy-config proxy.config.json",
     "dashboard": "ng serve --app dashboard --port 4300",
     "build": "ng build",
     "test": "ng test",
