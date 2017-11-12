@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start-all" : "concurrently \"ng serve --app main\" \"ng serve --app dashboard --port 4300\"",
+    "start-all": "concurrently \"ng serve --app main\" \"ng serve --app dashboard --port 4300\"",
     "start": "ng serve --app main",
     "dashboard": "ng serve --app dashboard --port 4300",
     "build": "ng build",
@@ -26,6 +26,7 @@
     "bootstrap": "^4.0.0-beta.2",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
+    "js-yaml": "^3.10.0",
     "moment": "^2.19.1",
     "rxjs": "^5.5.2",
     "typescript-collections": "^1.2.5",
