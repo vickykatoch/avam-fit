@@ -43,7 +43,7 @@ export class LocalDataService extends BootstappingPipelineItem {
           type : '',
           env : 'DEV',
           region : 'XNA',
-          versio : '1.0.0'
+          version : '1.0.0'
         };
         this.dispatchStoreAction(appInfo);
         this.logger.timeEnd('UserInfoBootstrapService');

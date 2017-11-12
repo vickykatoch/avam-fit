@@ -32,10 +32,10 @@ export class AppconfigBootstrapService extends BootstappingPipelineItem {
       this._currentStatus.startTime = Date.now();
       this._currentStatus.status = BootstrapStatusType.Running;
       this.store
-      this.store.select<AppConfig>('appConfig')
+      this.store.select<AppConfig>(appState=> appState)
         .take(1)
         .subscribe(cfg=> {
-        
+
         console.log(cfg);
       });
 

@@ -4,7 +4,7 @@ import {
       UserPreference,
       User,
       Workspace
-} from './fit-core-models/index';
+} from 'fit-core-models/index';
 
 import { AppInfoDefaultStateProvider } from './defaultStates/appInfo-defstate.provider';
 import { AppConfigDefaultStateProvider } from './defaultStates/appConfig-defstate.provider';
