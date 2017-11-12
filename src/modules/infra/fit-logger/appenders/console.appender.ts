@@ -18,10 +18,10 @@ export class ConsoleAppender implements Appender {
                   const message = this.getFormattedMessage(loggingEvent);
                   switch (loggingEvent.level) {
                         case LogLevel.DEBUG:
-                        case LogLevel.FATAL:
                               console.debug(message);
                               break;
                         case LogLevel.ERROR:
+                        case LogLevel.FATAL:
                               console.error(message);
                               break;
                         case LogLevel.INFO:

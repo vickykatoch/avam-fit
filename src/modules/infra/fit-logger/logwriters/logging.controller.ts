@@ -23,7 +23,6 @@ export class LoggingController {
 
       public initialize(loggerStaticInfo: LoggerStaticInfo, options?: LogOptions) {
             this.resolveStaticInfo(loggerStaticInfo);
-            debugger;
             this._logOptions = options || this._logOptions || this.getDefaultOptions();
             this._logOptions.appenders.forEach(appenderOptions => {
                   if (appenderOptions.isDefferred) {
