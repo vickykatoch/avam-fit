@@ -31,7 +31,6 @@ export class BootstrapperStatusComponent implements OnInit {
   }
 
   onStatusReceived(status: ServiceBootstrapStatus) {
-    debugger;
     this.updateStatusText();
   }
   onError(err: Error) {
