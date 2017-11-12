@@ -18,10 +18,10 @@
       "minHeight": 50,
       "defaultTop": 50,
       "defaultLeft": 50,
-      "resizable": true,
+      "resizable": false,
       "maximizable": false,
       "frame": false,
-      "alwaysOnTop" : false,
+      "alwaysOnTop" : true,
       "cornerRounding": {
           "width": 0,
           "height": 0,
