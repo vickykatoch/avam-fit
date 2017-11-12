@@ -17,12 +17,18 @@
       "dom"
     ],
     "paths": {
-       "fit-logger-core/*" : [
-          "modules/core/fit-logger-core/*"
-       ],
-       "fit-logger/*" : [
-          "modules/infra/fit-logger/*"
-       ]
+      "fit-logger-core/*": [
+        "modules/core/fit-logger-core/*"
+      ],
+      "fit-logger/*": [
+        "modules/infra/fit-logger/*"
+      ],
+      "fit-apphost-core/*": [
+        "modules/core/fit-apphost-core/*"
+      ],
+      "fin-app-host/*": [
+        "modules/infra/fin-app-host/*"
+      ]
     }
   }
 }

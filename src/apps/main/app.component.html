@@ -1,1 +1,14 @@
-<fit-bootstrapper-status (bootStrapped)="onBootstrapSucceeded($event)"></fit-bootstrapper-status>
+<div class="d-flex flex-column app-host">
+    <div class="d-flex win-title-bar">
+        <div class="fhw-item title">{{title}}</div>
+        <span class="close-btn">
+          <i class="fa fa-times" aria-hidden="true" title="Close"></i>
+        </span>
+      </div>
+  <div  class="fhw-item content-host">
+      <fit-bootstrapper-status (bootStrapped)="onBootstrapSucceeded($event)"></fit-bootstrapper-status>
+  </div>
+</div>
+
+
+

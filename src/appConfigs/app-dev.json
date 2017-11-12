@@ -1,0 +1,54 @@
+{
+  "devtools_port": 9090,
+  "startup_app": {
+      "name": "FIT",
+      "icon": "http://localhost:4200/favicon.ico",
+      "description": "Avam FIT",
+      "url": "http://localhost:4200/",
+      "uuid": "FIT",
+      "backgroundColor": "#fffff",
+      "contextMenu": true,
+      "autoShow": true,
+      "defaultCentered" : true,
+      "defaultWidth": 800,
+      "maxWidth": 800,
+      "minWidth": 800,
+      "maxHeight": 230,
+      "defaultHeight": 230,
+      "minHeight": 50,
+      "defaultTop": 50,
+      "defaultLeft": 50,
+      "resizable": true,
+      "maximizable": false,
+      "frame": false,
+      "alwaysOnTop" : false,
+      "cornerRounding": {
+          "width": 0,
+          "height": 0,
+          "taskbarIconGroup": "FIT",
+          "loadErrorMessage": "There was an error loading the application."
+      }
+  },
+  "runtime": {
+      "version": "8.56.24.41",
+      "forceLatest": false
+  },
+  "shortcut": {
+      "company": "Avam",
+      "description": "FIT",
+      "icon": "http://localhost:4200/favicon.ico",
+      "name": "FIT",
+      "target": [
+          "desktop"
+      ],
+      "force": false,
+      "startMenuRootFolder": "Avam/FIT",
+      "uninstall-shortcut": false
+  },
+  "splashScreenImage": "http://localhost:4200/assets/images/logo.jpg",
+  "supportInformation": {
+      "company": "Company Name",
+      "product": "Product Name",
+      "email": "support@company.com"
+  }
+}

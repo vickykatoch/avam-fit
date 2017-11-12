@@ -9,7 +9,8 @@
       "outDir": "dist/main",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        "appConfigs"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -19,6 +20,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "fit",
       "styles": [
+        "../node_modules/bootstrap/dist/css/bootstrap.css",
         "styles.scss"
       ],
       "scripts": [],

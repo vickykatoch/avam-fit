@@ -14,7 +14,7 @@ import { BootstrappingManagerService,
   ]
 })
 export class AppComponent implements OnInit {
-  title = 'fit';
+  title = 'Avam FIT';
   private noop = ()=>{};
   private logger : ApplicationLogger
 
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
         this.logger = loggingService.getLogger('AppComponent');
   }
   ngOnInit() {
-    this.title = "Bootstraping Application...";
+    // this.title = "Bootstraping Application...";
     this.bootStrapper.bootstrap();
   }
   onBootstrapSucceeded(evt: any) : void {

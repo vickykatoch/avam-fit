@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+$fa-font-path: "../node_modules/font-awesome/fonts";
+@import "../node_modules/font-awesome/scss/font-awesome.scss";
+
+
+body {
+  background: #272B30 !important;
+  color: #aaa !important;
+  line-height: 25px;
+  margin:0;
+  padding: 0;
+  font-size:14px;
+}
+.fhw-item {
+  flex-grow: 1;
+}
+.win-title-bar {
+  background:#52575C;
+  color : #fff;
+  min-height:30px;
+  padding: 2px 2px 2px 10px;
+  .title {
+    -webkit-app-region: drag;
+  }
+  .close-btn {
+    font-size : 1.1rem;
+    padding : 0 5px;
+
+    &:hover{
+      background: red;
+    }
+  }
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 0 !important;
+}
+
