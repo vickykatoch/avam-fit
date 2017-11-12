@@ -5,7 +5,8 @@ import {
   AppconfigBootstrapService,
   ChildAppsBootstrapService,
   UserInfoBootstrapService,
-  UserPreferenceBootstrapService
+  UserPreferenceBootstrapService,
+  LocalDataService
 } from './services/index';
 import { BootstrappingStatusNotifierService } from './bootstrapping-status-notifier.service';
 import { ServiceBootstrapStatus, BootstrapStatusType } from './bootstrap.models';
@@ -30,6 +31,7 @@ export class BootstrappingManagerService {
     private appConfigService: AppconfigBootstrapService,
     private childAppService: ChildAppsBootstrapService,
     private userInfoService: UserInfoBootstrapService,
+    private localAppData : LocalDataService,
     private userPrefService: UserPreferenceBootstrapService) {
       loggingService.init({appName: 'MainApp'});
       this.logger = loggingService.getLogger('BootstrappingManagerService');
@@ -62,10 +64,10 @@ export class BootstrappingManagerService {
   // #region Helper Methods
   private registerServices() {
     this.logger.debug('Registering the bootstrapping services to application bootstrap pipeline');
-    [this.appConfigService, this.childAppService, this.userInfoService, this.userPrefService]
+    [this.localAppData, this.appConfigService, this.childAppService, this.userInfoService, this.userPrefService]
       .sort((a, b) => a.serviceInfo.priority - b.serviceInfo.priority)
       .forEach(service => this.bootstrapPipelineItemsQueue.enqueue(service));
-      this.logger.debug('Bootstrap services registered', this.bootstrapPipelineItemsQueue);
+      // this.logger.debug('Bootstrap services registered', this.bootstrapPipelineItemsQueue);
       this.logger.debug('Bootstrap services count : ', this.bootstrapPipelineItemsQueue.size());
   }
   private onBootStrapError(error: any) {

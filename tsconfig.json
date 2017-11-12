@@ -34,6 +34,9 @@
       ],
       "fit-core-models/*" : [
         "modules/core/fit-core-models/*"
+      ],
+      "fit-data-models/*" : [
+        "modules/core/fit-data-models/*"
       ]
     }
   }

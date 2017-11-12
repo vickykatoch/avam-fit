@@ -8,12 +8,14 @@ import { BootstrappingManagerService,
   AppconfigBootstrapService,
   ChildAppsBootstrapService,
   UserInfoBootstrapService,
-  UserPreferenceBootstrapService
+  UserPreferenceBootstrapService,
+  LocalDataService
  } from './bootstrapper/index';
 import { FitLoggerModule } from 'fit-logger/index';
 import { FinAppHostModule } from 'fin-app-host/index';
 import { FitCoreDataModule } from 'fit-core-data/index';
-
+import { StoreModule } from '@ngrx/store';
+import { FitStoreHelper } from './store/index';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { FitCoreDataModule } from 'fit-core-data/index';
     BrowserModule,
     FitLoggerModule,
     FinAppHostModule,
-    FitCoreDataModule
+    FitCoreDataModule,
+    StoreModule.forRoot(FitStoreHelper.reducers(), { initialState: FitStoreHelper.initialState() })
   ],
   providers: [
     BootstrappingStatusNotifierService,
@@ -32,7 +35,8 @@ import { FitCoreDataModule } from 'fit-core-data/index';
     AppconfigBootstrapService,
     ChildAppsBootstrapService,
     UserInfoBootstrapService,
-    UserPreferenceBootstrapService
+    UserPreferenceBootstrapService,
+    LocalDataService
   ],
   bootstrap: [AppComponent]
 })
