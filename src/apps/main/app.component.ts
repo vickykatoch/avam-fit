@@ -1,7 +1,9 @@
+import { ApplicationLoggingService, ApplicationLogger } from 'fit-logger-core/index';
 import { Component, OnInit } from '@angular/core';
 import { BootstrappingManagerService,
   BootstrappingStatusNotifierService
  } from './bootstrapper/index';
+
 
 @Component({
   selector: 'fit-root',
@@ -14,16 +16,19 @@ import { BootstrappingManagerService,
 export class AppComponent implements OnInit {
   title = 'fit';
   private noop = ()=>{};
+  private logger : ApplicationLogger
 
-  constructor(private bootStrapper : BootstrappingManagerService) {
-
+  constructor(private bootStrapper : BootstrappingManagerService,
+              loggingService : ApplicationLoggingService) {
+        // loggingService.init({appName: 'MainApp'});
+        this.logger = loggingService.getLogger('AppComponent');
   }
   ngOnInit() {
     this.title = "Bootstraping Application...";
     this.bootStrapper.bootstrap();
   }
   onBootstrapSucceeded(evt: any) : void {
-    console.log('App Bootstrapped');
+    this.logger.info('App Bootstrapped');
   }
 
 

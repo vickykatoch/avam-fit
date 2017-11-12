@@ -10,6 +10,7 @@ import { BootstrappingManagerService,
   UserInfoBootstrapService,
   UserPreferenceBootstrapService
  } from './bootstrapper/index';
+import { FitLoggerModule } from 'fit-logger/index';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { BootstrappingManagerService,
     BootstrapperStatusComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FitLoggerModule
   ],
   providers: [
     BootstrappingStatusNotifierService,

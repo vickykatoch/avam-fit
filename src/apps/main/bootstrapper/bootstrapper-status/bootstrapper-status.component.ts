@@ -28,7 +28,7 @@ export class BootstrapperStatusComponent implements OnInit {
   }
 
   onStatusReceived(status: ServiceBootstrapStatus) {
-    console.info(status);
+    // console.info(status);
   }
   onError(err: Error) {
     console.error(err);

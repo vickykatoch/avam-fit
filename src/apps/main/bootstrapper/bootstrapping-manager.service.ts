@@ -1,3 +1,4 @@
+import { ApplicationLoggingService, ApplicationLogger } from 'fit-logger-core/index';
 import { Injectable } from '@angular/core';
 import {
   BootstappingPipelineItem,
@@ -22,16 +23,22 @@ interface ServiceStatus {
 @Injectable()
 export class BootstrappingManagerService {
   private bootstrapPipelineItemsQueue = new Queue<BootstappingPipelineItem>();
+  private logger : ApplicationLogger;
 
   constructor(private statusNotifier: BootstrappingStatusNotifierService,
+    loggingService : ApplicationLoggingService,
     private appConfigService: AppconfigBootstrapService,
     private childAppService: ChildAppsBootstrapService,
     private userInfoService: UserInfoBootstrapService,
     private userPrefService: UserPreferenceBootstrapService) {
+      loggingService.init({appName: 'MainApp'});
+      this.logger = loggingService.getLogger('BootstrappingManagerService');
+
     this.registerServices();
   }
 
   bootstrap() {
+    this.logger.info('Application bootstrap started');
     const bootStrappingServices: Observable<ServiceBootstrapStatus>[] = [];
     const initialBSSeviceStatusList: ServiceBootstrapStatus[] = [];
     while (true) {
@@ -54,12 +61,15 @@ export class BootstrappingManagerService {
 
   // #region Helper Methods
   private registerServices() {
+    this.logger.debug('Registering the bootstrapping services to application bootstrap pipeline');
     [this.appConfigService, this.childAppService, this.userInfoService, this.userPrefService]
       .sort((a, b) => a.serviceInfo.priority - b.serviceInfo.priority)
       .forEach(service => this.bootstrapPipelineItemsQueue.enqueue(service));
+      this.logger.debug('Bootstrap services registered', this.bootstrapPipelineItemsQueue);
+      this.logger.debug('Bootstrap services count : ', this.bootstrapPipelineItemsQueue.size());
   }
   private onBootStrapError(error: any) {
-
+    this.logger.error('Application bootstrap error has occurred, cannot move any further : ', error);
   }
   //#endregion
 }
