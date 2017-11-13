@@ -12,9 +12,6 @@ import { ActionCreatorFactory } from './../../store/index';
 
 @Injectable()
 export class AppconfigBootstrapService extends BootstappingPipelineItem {
-  private _serviceInfo: BootstrapServiceInfo;
-  private _currentStatus: ServiceBootstrapStatus;
-
 
   constructor(loggingService: ApplicationLoggingService,
               private store: Store<AppConfig>,
@@ -24,24 +21,17 @@ export class AppconfigBootstrapService extends BootstappingPipelineItem {
     this._serviceInfo = this._serviceInfo || { name: 'AppConfig', displayName: 'Application Configuration', priority: 1 } ;
     this._currentStatus = this._currentStatus || { startTime : null, endTime : null, status :  BootstrapStatusType.Initial, service : this.serviceInfo, error: null };
   }
-  get serviceInfo(): BootstrapServiceInfo {
-      return this._serviceInfo;
-  }
-  get currentStatus(): ServiceBootstrapStatus {
-    return this._currentStatus;
-  }
+
   public start(options?: any): Observable<ServiceBootstrapStatus> {
     return Observable.create((observer: Observer<ServiceBootstrapStatus>) => {
       this.logger.time('ApplicationConfigService');
-      this._currentStatus.startTime = Date.now();
-      this._currentStatus.status = BootstrapStatusType.Running;
+      this.updateStatus({startTime : Date.now(), status : BootstrapStatusType.Running});
       observer.next(this._currentStatus);
       const appInfo = AppContext.instance.appInfo;
       const url = `${appInfo.baseUrl}/api/appConfigs/${appInfo.region}/${appInfo.env}`;
       this.appConfigService.fetch(url).subscribe(appConfig=> {
         this.store.dispatch(ActionCreatorFactory.create<AppConfig>('LOAD_APPCONFIG',appConfig));
-        this._currentStatus.endTime = Date.now();
-        this._currentStatus.status = BootstrapStatusType.Succeeded;
+        this.updateStatus({endTime : Date.now(), status : BootstrapStatusType.Succeeded});
         this.logger.timeEnd('ApplicationConfigService');
         observer.next(this._currentStatus);
         observer.complete();

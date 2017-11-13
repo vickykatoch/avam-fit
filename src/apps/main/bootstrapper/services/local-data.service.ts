@@ -11,32 +11,22 @@ import { Store } from '@ngrx/store';
 
 @Injectable()
 export class LocalDataService extends BootstappingPipelineItem {
-
-  private _serviceInfo: BootstrapServiceInfo;
-  private _currentStatus: ServiceBootstrapStatus;
-
   constructor(loggingService: ApplicationLoggingService,
               private store: Store<ApplicationInfo>) {
     super('LocalAppDataService', loggingService);
     this._serviceInfo = this._serviceInfo || { name: 'LocalAppData', displayName: 'Local App Data', priority: 0 };
     this._currentStatus = this._currentStatus || { startTime: null, endTime: null, status: BootstrapStatusType.Initial, service: this.serviceInfo, error: null };
   }
-  get serviceInfo(): BootstrapServiceInfo {
-    return this._serviceInfo;
-  }
-  get currentStatus(): ServiceBootstrapStatus {
-    return this._currentStatus;
-  }
+
 
   public start(options?: any): Observable<ServiceBootstrapStatus> {
     return Observable.create((observer: Observer<ServiceBootstrapStatus>) => {
       this.logger.time('UserInfoBootstrapService');
-      this._currentStatus.startTime = Date.now();
-      this._currentStatus.status = BootstrapStatusType.Running;
+      this.updateStatus({startTime : Date.now(), status : BootstrapStatusType.Running});
       observer.next(this._currentStatus);
       AppContext.instance.init('Main','DEV','XNA',window.location.origin, window.location.href)
           .subscribe(appInfo=>{
-            Object.assign(this._currentStatus, {endTime : Date.now(),status : BootstrapStatusType.Succeeded });
+            this.updateStatus({endTime : Date.now(), status : BootstrapStatusType.Succeeded});
             observer.next(this._currentStatus);
             observer.complete();
           });

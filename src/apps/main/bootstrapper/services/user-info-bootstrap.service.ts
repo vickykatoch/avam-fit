@@ -12,9 +12,6 @@ import { Store } from '@ngrx/store';
 @Injectable()
 export class UserInfoBootstrapService extends BootstappingPipelineItem {
 
-  private _serviceInfo: BootstrapServiceInfo;
-  private _currentStatus: ServiceBootstrapStatus;
-
   constructor(loggingService: ApplicationLoggingService,
               private userDataService: UserDataService
             ) {
@@ -22,23 +19,18 @@ export class UserInfoBootstrapService extends BootstappingPipelineItem {
     this._serviceInfo = this._serviceInfo || { name: 'User', displayName: 'User Configuration', priority: 21 };
     this._currentStatus = this._currentStatus || { startTime: null, endTime: null, status: BootstrapStatusType.Initial, service: this.serviceInfo, error: null };
   }
-  get serviceInfo(): BootstrapServiceInfo {
-    return this._serviceInfo;
-  }
-  get currentStatus(): ServiceBootstrapStatus {
-    return this._currentStatus;
-  }
+
   public start(options?: any): Observable<ServiceBootstrapStatus> {
     return Observable.create((observer: Observer<ServiceBootstrapStatus>) => {
       this.logger.time('UserInfoBootstrapService');
-      Object.assign(this._currentStatus, { startTime: Date.now(), status: BootstrapStatusType.Running });
+      this.updateStatus({startTime : Date.now(), status : BootstrapStatusType.Running});
       observer.next(this._currentStatus);
       const appInfo = AppContext.instance.appInfo;
       const url = `${appInfo.baseUrl}/api/users/${appInfo.user}`;
       this.userDataService.fetch(url)
         .subscribe(user=> {
-          Object.assign(this._currentStatus, {endTime : Date.now(),status : BootstrapStatusType.Succeeded });
           AppContext.instance.setUserInfo(user);
+          this.updateStatus({endTime : Date.now(), status : BootstrapStatusType.Succeeded});
           observer.next(this._currentStatus);
           observer.complete();
         });

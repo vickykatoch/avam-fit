@@ -2,7 +2,9 @@
 
 export abstract class AppHostProvider {
 
-  abstract createNewApp(options: any) : Promise<any>;
+  name: string;
+  abstract createNewApp(url: string, name: string) : Promise<any>;
   abstract getCurrent() : any;
-
+  abstract show(name: string): void;
+  abstract showAll() : void;
 }

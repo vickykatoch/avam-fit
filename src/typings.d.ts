@@ -28,3 +28,8 @@ declare var SharedWorker: {
    */
   new(stringUrl: string, name?: string): SharedWorker.SharedWorker;
 };
+
+declare var fin : FinModule;
+interface FinModule {
+  desktop : any;
+}

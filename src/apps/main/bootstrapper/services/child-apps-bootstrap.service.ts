@@ -5,36 +5,33 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { BootstrapServiceInfo, BootstrapStatusType, ServiceBootstrapStatus } from '../bootstrap.models';
 import { AppHostProvider } from 'fit-apphost-core/index';
+import { error } from 'util';
 
 @Injectable()
 export class ChildAppsBootstrapService extends BootstappingPipelineItem {
-
-  private _serviceInfo: BootstrapServiceInfo;
-  private _currentStatus: ServiceBootstrapStatus;
 
   constructor(private loggingService: ApplicationLoggingService, private apphostProvider : AppHostProvider) {
     super('ChildAppsBootstrapService', loggingService);
     this._serviceInfo = this._serviceInfo || { name: 'ChildApps', displayName: 'Child Applications', priority: 100 } ;
     this._currentStatus = this._currentStatus || { startTime : null, endTime : null, status :  BootstrapStatusType.Initial, service : this.serviceInfo, error: null };
   }
-  get serviceInfo(): BootstrapServiceInfo {
-      return this._serviceInfo;
-  }
-  get currentStatus(): ServiceBootstrapStatus {
-    return this._currentStatus;
-  }
+
   public start(options?: any): Observable<ServiceBootstrapStatus> {
     return Observable.create((observer: Observer<ServiceBootstrapStatus>) => {
       this.logger.time('ChildAppsBootstrapService');
-      this._currentStatus.startTime = Date.now();
-      this._currentStatus.status = BootstrapStatusType.Running;
+      this.updateStatus({startTime : Date.now(), status : BootstrapStatusType.Running});
       observer.next(this._currentStatus);
-      this.apphostProvider.createNewApp({}).then((app)=> {
-        this._currentStatus.endTime = Date.now();
-        this._currentStatus.status = BootstrapStatusType.Succeeded;
+      this.apphostProvider.createNewApp('http://localhost:4300','DASHBOARD').then((app)=> {
+        this.updateStatus({endTime : Date.now(), status : BootstrapStatusType.Succeeded});
+        this.apphostProvider.show(app);
         this.logger.timeEnd('ChildAppsBootstrapService');
         observer.next(this._currentStatus);
         observer.complete();
+      }).catch(error=>{
+        this.updateStatus({endTime : Date.now(), status : BootstrapStatusType.Failed});
+        observer.next(this._currentStatus);
+        this.logger.error(error);
+        observer.error(error);
       });
     });
   }
