@@ -25,3 +25,31 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+## RXJS retryWhen with timeout
+import 'rxjs/add/operator/retryWhen';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/take'
+import 'rxjs/add/operator/concat';
+import 'rxjs/add/operator/timeout';
+
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
+
+onStart() {
+    const url = "http://localhost:8000/api/users/Y312876";
+    this.http.get(url)
+      .timeout(1000)
+      .retryWhen(errorObs => {
+        return errorObs.flatMap(error => {
+          this.logger.error('Error : ', error.message);
+          return Observable.of(error.status).delay(1000);
+        }).take(3).concat(Observable.throw({ error: 'There was an error even after 3 retries' }));
+      }).subscribe(
+      (d) => this.logger.info('Next => ', d),
+      (e) => this.logger.error('Error Last : ', e),
+      () => this.logger.info('Complete')
+      );
+  }
